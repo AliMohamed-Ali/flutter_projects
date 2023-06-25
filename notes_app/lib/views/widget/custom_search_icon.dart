@@ -12,7 +12,7 @@ class CustomSearchIcon extends StatelessWidget {
         color: Colors.white.withOpacity(0.05),
         borderRadius: BorderRadius.circular(16),
       ),
-      child: Icon(
+      child:const Icon(
         Icons.search,
         size: 32,
       ),
