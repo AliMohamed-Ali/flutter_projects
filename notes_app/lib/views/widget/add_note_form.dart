@@ -57,8 +57,9 @@ class _AddNoteFormState extends State<AddNoteForm> {
                   if (formKey.currentState!.validate()) {
                     formKey.currentState!.save();
                     var currentDate = DateTime.now();
+                    print(currentDate);
                     var formateDate =
-                        DateFormat('dd-mm-yyyy').format(currentDate);
+                        DateFormat('dd-MM-yyyy').format(currentDate);
                     var noteModel = NoteModel(
                         title: title!,
                         subtitle: subtitle!,
