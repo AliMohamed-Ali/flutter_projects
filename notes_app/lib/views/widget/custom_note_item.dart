@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:notes_app/cubits/notes_cubit/notes_cubit.dart';
+import 'package:notes_app/models/note_model.dart';
 import 'package:notes_app/views/edit_notes.dart';
 
 class NoteItme extends StatelessWidget {
-  const NoteItme({super.key});
-
+  const NoteItme({super.key, required this.note});
+  final NoteModel note;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -23,9 +26,9 @@ class NoteItme extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             ListTile(
-              title: const Text(
-                "Flutter Tips",
-                style: TextStyle(
+              title: Text(
+                note.title,
+                style: const TextStyle(
                   color: Colors.black,
                   fontSize: 26,
                 ),
@@ -33,7 +36,7 @@ class NoteItme extends StatelessWidget {
               subtitle: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 16.0),
                 child: Text(
-                  "create your career with throwt samy",
+                  note.subtitle,
                   style: TextStyle(
                     color: Colors.black.withOpacity(0.5),
                     fontSize: 18,
@@ -42,7 +45,8 @@ class NoteItme extends StatelessWidget {
               ),
               trailing: IconButton(
                 onPressed: () {
-                  print("ali");
+                  note.delete();
+                  BlocProvider.of<NotesCubit>(context).fetchAllNotes();
                 },
                 icon: const Icon(
                   Icons.delete,
@@ -54,7 +58,7 @@ class NoteItme extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(right: 24),
               child: Text(
-                "May 21,1,2022",
+                note.date,
                 style: TextStyle(
                   color: Colors.black.withOpacity(0.4),
                   fontSize: 16,
