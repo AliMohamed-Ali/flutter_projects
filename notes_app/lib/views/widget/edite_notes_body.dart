@@ -40,7 +40,7 @@ class _EditeNoteBodyState extends State<EditeNoteBody> {
             height: 32,
           ),
           CustomTextField(
-            // value: widget.note.title,
+            value: widget.note.title,
             hint: widget.note.title,
             onChanged: (data) => title = data,
           ),
@@ -48,7 +48,7 @@ class _EditeNoteBodyState extends State<EditeNoteBody> {
             height: 16,
           ),
           CustomTextField(
-            // value: widget.note.subtitle,
+            value: widget.note.subtitle,
             hint: widget.note.subtitle,
             maxLines: 5,
             onChanged: (data) => subtitle = data,
