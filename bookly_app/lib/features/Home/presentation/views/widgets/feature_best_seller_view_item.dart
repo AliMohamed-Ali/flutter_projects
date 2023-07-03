@@ -7,8 +7,8 @@ import '../../../../../core/utils/assets.dart';
 import '../../../../../core/utils/styles.dart';
 import 'book_rating.dart';
 
-class FeatureBestSellerItem extends StatelessWidget {
-  const FeatureBestSellerItem({super.key});
+class BookListViewItem extends StatelessWidget {
+  const BookListViewItem({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -43,8 +43,8 @@ class FeatureBestSellerItem extends StatelessWidget {
                     width: MediaQuery.of(context).size.width * .5,
                     child: Text(
                       "THE NAME OF THE BOOK ",
-                      style:
-                          Styles.textStyle20.copyWith(fontFamily: kGTSectraFine),
+                      style: Styles.textStyle20
+                          .copyWith(fontFamily: kGTSectraFine),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
