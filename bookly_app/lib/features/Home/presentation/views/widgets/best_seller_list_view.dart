@@ -1,22 +1,24 @@
+import 'package:bookly_app/constants.dart';
 import 'package:flutter/material.dart';
 
-import 'feature_best_seller_view_item.dart';
+import 'custom_book_image.dart';
 
 class BestSellerListView extends StatelessWidget {
   const BestSellerListView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: kPrimaryPadding),
       child: ListView.builder(
         physics: const NeverScrollableScrollPhysics(),
-        shrinkWrap: true,
+        // shrinkWrap: true,
         padding: EdgeInsets.zero,
         itemCount: 10,
         itemBuilder: (context, index) {
           return const Padding(
             padding: EdgeInsets.symmetric(vertical: 10.0),
-            child: FeatureBestSellerItem(),
+            child: CustomBookImage(),
           );
         },
       ),
