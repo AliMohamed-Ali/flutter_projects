@@ -1,7 +1,7 @@
 import 'package:bookly_app/constants.dart';
 import 'package:flutter/material.dart';
 
-import 'custom_book_image.dart';
+import 'feature_best_seller_view_item.dart';
 
 class BestSellerListView extends StatelessWidget {
   const BestSellerListView({super.key});
@@ -18,7 +18,7 @@ class BestSellerListView extends StatelessWidget {
         itemBuilder: (context, index) {
           return const Padding(
             padding: EdgeInsets.symmetric(vertical: 10.0),
-            child: CustomBookImage(),
+            child: FeatureBestSellerItem(),
           );
         },
       ),
