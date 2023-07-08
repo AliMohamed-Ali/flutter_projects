@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class CustomBookDetailAppBar extends StatelessWidget {
   const CustomBookDetailAppBar({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.symmetric(vertical: 30),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 30),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Icon(Icons.close),
-          Icon(Icons.shopping_cart),
+          IconButton(
+              onPressed: () {
+                GoRouter.of(context).pop();
+              },
+              icon: Icon(Icons.close)),
+          const Icon(Icons.shopping_cart),
         ],
       ),
     );

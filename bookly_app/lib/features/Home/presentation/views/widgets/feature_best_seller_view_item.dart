@@ -23,7 +23,7 @@ class BookListViewItem extends StatelessWidget {
           // mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             CustomBookImage(
-                imageUrl: bookModel.volumeInfo.imageLinks.thumbnail),
+                imageUrl: bookModel.volumeInfo.imageLinks?.thumbnail ?? ''),
             const SizedBox(
               width: 30,
             ),

@@ -1,3 +1,4 @@
+import 'package:bookly_app/features/Home/data/models/book_model/book_model.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../core/utils/styles.dart';
@@ -6,8 +7,8 @@ import 'book_rating.dart';
 import 'custom_book_image.dart';
 
 class BooksDetailsSection extends StatelessWidget {
-  const BooksDetailsSection({super.key});
-
+  const BooksDetailsSection({super.key, required this.bookModel});
+  final BookModel bookModel;
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
@@ -15,23 +16,23 @@ class BooksDetailsSection extends StatelessWidget {
       children: [
         Padding(
           padding: EdgeInsets.symmetric(horizontal: width * .27),
-          child: const CustomBookImage(
-            imageUrl:
-                "http://books.google.com/books/content?id=FZ-eDwAAQBAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api",
+          child: CustomBookImage(
+            imageUrl: bookModel.volumeInfo.imageLinks?.thumbnail ?? '',
           ),
         ),
         const SizedBox(
           height: 43,
         ),
-        const Text(
-          "The Name Of The Book",
+        Text(
+          bookModel.volumeInfo.title ?? "",
           style: Styles.textStyle30,
+          textAlign: TextAlign.center,
         ),
         const SizedBox(
           height: 6,
         ),
         Text(
-          "J.K. Rowlling",
+          bookModel.volumeInfo.authors?[0] ?? "",
           style: Styles.textStyle18.copyWith(
             color: Colors.grey,
             fontStyle: FontStyle.italic,
@@ -41,15 +42,15 @@ class BooksDetailsSection extends StatelessWidget {
         const SizedBox(
           height: 18,
         ),
-        const BookRating(
+        BookRating(
           mainAxisAlignment: MainAxisAlignment.center,
-          rating: 45,
-          count: 333,
+          rating: bookModel.volumeInfo.pageCount ?? 10,
+          count: bookModel.volumeInfo.pageCount ?? 10,
         ),
         const SizedBox(
           height: 37,
         ),
-        const BookAction(),
+         BookAction(bookModel:bookModel ,),
       ],
     );
   }
