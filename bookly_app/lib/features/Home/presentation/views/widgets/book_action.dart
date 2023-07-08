@@ -1,3 +1,4 @@
+import 'package:bookly_app/core/utils/function/lunch_url.dart';
 import 'package:bookly_app/core/widgets/custom_button.dart';
 import 'package:bookly_app/features/Home/data/models/book_model/book_model.dart';
 import 'package:flutter/material.dart';
@@ -27,13 +28,8 @@ class BookAction extends StatelessWidget {
           ),
           Expanded(
             child: CustomButton(
-              onPressed: () async {
-                Uri url = Uri.parse(bookModel.volumeInfo.infoLink!);
-                if (await canLaunchUrl(url)) {
-                  await launchUrl(url);
-                } else {
-                  throw Exception('Could not launch $url');
-                }
+              onPressed: () {
+                launchCastumUrl(context, "bookModel.volumeInfo.previewLink!");
               },
               text: getText(bookModel),
               textSize: 16,
@@ -49,10 +45,10 @@ class BookAction extends StatelessWidget {
     );
   }
 
-  String getText(BookModel bookModel){
-    if(bookModel.volumeInfo.previewLink == null){
+  String getText(BookModel bookModel) {
+    if (bookModel.volumeInfo.previewLink == null) {
       return "Not Avaliable";
-    }else{
+    } else {
       return "Preview";
     }
   }
