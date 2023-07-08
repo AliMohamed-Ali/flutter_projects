@@ -28,14 +28,14 @@ class BookAction extends StatelessWidget {
           Expanded(
             child: CustomButton(
               onPressed: () async {
-                Uri url = Uri.parse(bookModel.volumeInfo.previewLink!);
+                Uri url = Uri.parse(bookModel.volumeInfo.infoLink!);
                 if (await canLaunchUrl(url)) {
                   await launchUrl(url);
                 } else {
                   throw Exception('Could not launch $url');
                 }
               },
-              text: "Free Preview",
+              text: getText(bookModel),
               textSize: 16,
               textColor: Colors.white,
               backgroundColor: Colors.orange,
@@ -47,5 +47,13 @@ class BookAction extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  String getText(BookModel bookModel){
+    if(bookModel.volumeInfo.previewLink == null){
+      return "Not Avaliable";
+    }else{
+      return "Preview";
+    }
   }
 }

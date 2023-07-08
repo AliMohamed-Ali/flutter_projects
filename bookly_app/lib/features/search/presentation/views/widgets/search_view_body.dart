@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../../../../../constants.dart';
 import '../../../../../core/utils/styles.dart';
-import '../../../../Home/presentation/views/widgets/feature_best_seller_view_item.dart';
 import 'custom_search_text_field.dart';
 
 class SearchViewBody extends StatelessWidget {
@@ -50,6 +47,6 @@ class SearchResultListView extends StatelessWidget {
         );
       },
     );
-    ;
+    
   }
 }
