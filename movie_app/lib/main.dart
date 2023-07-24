@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/features/home/data/repos/home_impl_repo.dart';
+import 'package:movie_app/features/home/presentation/manager/intheaterMovie/in_theater_movie_cubit.dart';
 import 'package:movie_app/features/home/presentation/manager/topRatingMovie/top_rating_cubit.dart';
 import 'package:movie_app/features/home/presentation/manager/trendingMovie/trending_movies_cubit.dart';
 import 'package:movie_app/features/home/presentation/views/home_tab_view.dart';
@@ -36,6 +37,11 @@ class PopFlake extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => TopRatingCubit(
+            getIt.get<HomeRepoImpl>(),
+          ),
+        ),
+        BlocProvider(
+          create: (context) => InTheaterMovieCubit(
             getIt.get<HomeRepoImpl>(),
           ),
         ),

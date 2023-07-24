@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movie_app/features/home/presentation/manager/intheaterMovie/in_theater_movie_cubit.dart';
 import 'package:movie_app/features/home/presentation/manager/topRatingMovie/top_rating_cubit.dart';
 import 'package:movie_app/features/home/presentation/manager/trendingMovie/trending_movies_cubit.dart';
 import 'package:movie_app/features/home/presentation/manager/upcommingMovie/upcomming_cubit.dart';
@@ -18,6 +19,7 @@ class _HomeTabViewState extends State<HomeTabView> {
     BlocProvider.of<TrendingMoviesCubit>(context).fetchTrendingMovie();
     BlocProvider.of<UpcommingCubit>(context).fetchUpcommingMovie();
     BlocProvider.of<TopRatingCubit>(context).fetchTopRatedMovie();
+    BlocProvider.of<InTheaterMovieCubit>(context).fetchInTheaterMovie();
     super.initState();
   }
 
