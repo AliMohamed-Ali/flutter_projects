@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:movie_app/features/home/home_page.dart';
-import 'package:movie_app/features/search/search_page.dart';
-import 'package:movie_app/features/settings/settings_page.dart';
+import 'package:movie_app/features/home/presentation/views/home_page.dart';
+import 'package:movie_app/features/search/presentation/views/search_page.dart';
+import 'package:movie_app/features/settings/presentation/views/settings_page.dart';
 
 void main() {
   runApp(const PopFlake());
@@ -37,7 +37,7 @@ class PopFlake extends StatelessWidget {
               ],
             ),
           ),
-          body: TabBarView(children: [
+          body: const TabBarView(children: [
             HomePage(),
             SearchPage(),
             SettingsPage(),

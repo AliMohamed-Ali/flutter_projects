@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class SettingsPage extends StatelessWidget {
-  const SettingsPage({super.key});
+class SearchPage extends StatelessWidget {
+  const SearchPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Text("Settings"),
+      child: Text("Search"),
     );
   }
 }
