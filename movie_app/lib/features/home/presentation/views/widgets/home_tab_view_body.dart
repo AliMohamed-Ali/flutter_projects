@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movie_app/features/home/presentation/manager/upcommingMovie/upcomming_cubit.dart';
-
+import 'package:movie_app/features/home/presentation/views/widgets/comming_soon_list.dart';
+import 'package:movie_app/features/home/presentation/views/widgets/top_rated_list.dart';
 import 'auto_scrolling_bar.dart';
 
 class HomeTabViewBody extends StatelessWidget {
@@ -9,27 +8,47 @@ class HomeTabViewBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return ListView(
       children: [
+        const Padding(
+          padding: EdgeInsets.symmetric(vertical: 10.0),
+          child: MovieCarousel(),
+        ),
         Container(
-          height: 200,
-          margin: const EdgeInsets.symmetric(vertical: 10),
-          child: BlocBuilder<UpcommingCubit, UpcommingState>(
-            builder: (context, state) {
-              if (state is UpcommingSuccess) {
-                return Expanded(
-                  child: MovieCarousel(
-                    movies: state.movies,
-                  ),
-                );
-              } else if (state is UpcommingFailure) {
-                return Text(state.errMessage);
-              } else {
-                return const Center(child: CircularProgressIndicator());
-              }
-            },
+          width: 150,
+          margin: const EdgeInsets.only(top: 10),
+          padding: const EdgeInsets.all(10),
+          child: const Text(
+            "Top Rating",
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.w500,
+            ),
           ),
-        )
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        const TopRatedListView(),
+        Container(
+          width: 150,
+          margin: const EdgeInsets.only(top: 10),
+          padding: const EdgeInsets.all(10),
+          child: const Text(
+            "Comming Soon",
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        const CommingSoonListView(),
+        const SizedBox(
+          height: 100,
+        ),
       ],
     );
   }

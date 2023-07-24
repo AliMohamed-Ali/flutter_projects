@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/features/home/data/repos/home_impl_repo.dart';
+import 'package:movie_app/features/home/presentation/manager/topRatingMovie/top_rating_cubit.dart';
+import 'package:movie_app/features/home/presentation/manager/trendingMovie/trending_movies_cubit.dart';
 import 'package:movie_app/features/home/presentation/views/home_tab_view.dart';
 import 'package:movie_app/features/search/presentation/views/search_page.dart';
 import 'package:movie_app/features/settings/presentation/views/settings_page.dart';
@@ -23,7 +25,20 @@ class PopFlake extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-            create: (context) => UpcommingCubit(getIt.get<HomeRepoImpl>())),
+          create: (context) => UpcommingCubit(
+            getIt.get<HomeRepoImpl>(),
+          ),
+        ),
+        BlocProvider(
+          create: (context) => TrendingMoviesCubit(
+            getIt.get<HomeRepoImpl>(),
+          ),
+        ),
+        BlocProvider(
+          create: (context) => TopRatingCubit(
+            getIt.get<HomeRepoImpl>(),
+          ),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -51,7 +66,7 @@ class PopFlake extends StatelessWidget {
                 ],
               ),
             ),
-            body:  TabBarView(children: [
+            body: TabBarView(children: [
               HomeTabView(),
               SearchTabView(),
               SettingsViewTab(),

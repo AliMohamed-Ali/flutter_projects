@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 
 class ApiService {
   static const baseImage = "https://image.tmdb.org/t/p/w200";
-  final _baseUrl = "https://api.themoviedb.org/3/movie/";
+  final _baseUrl = "https://api.themoviedb.org/3/";
   final accessToken =
       "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3M2ZlMmI4YjMxMDdjZjJmNGYyOTk2MmI5MTYzYmI0NyIsInN1YiI6IjY0YmQ4YzhiZWI3OWMyMDExYzI1YTU0MSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.S0X1FjtcUvufqkEukOaD-rERp8XsAlNrTLlhvrFiFbE";
   final Dio _dio;

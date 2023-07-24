@@ -1,29 +1,42 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/core/utils/api_service.dart';
+import 'package:movie_app/core/utils/widget/custom_failure_message.dart';
+import 'package:movie_app/core/utils/widget/custom_progress_indicator.dart';
+import 'package:movie_app/features/home/presentation/manager/trendingMovie/trending_movies_cubit.dart';
 
 import '../../../../../model/movie_model.dart';
 
 class MovieCarousel extends StatelessWidget {
-  final List<MovieModel> movies;
 
-  MovieCarousel({required this.movies});
+  const MovieCarousel({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return CarouselSlider.builder(
-      itemCount: movies.length,
-      itemBuilder: (context, index, realIndex) {
-        return MovieCarouselItem(movie: movies[index]);
+    return BlocBuilder<TrendingMoviesCubit, TrendingMoviesState>(
+      builder: (context, state) {
+        if(state is TrendingMoviesSuccess){
+          return CarouselSlider.builder(
+          itemCount: state.movies.length,
+          itemBuilder: (context, index, realIndex) {
+            return MovieCarouselItem(movie:state.movies[index]);
+          },
+          options: CarouselOptions(
+            autoPlay: true,
+            autoPlayInterval: const Duration(seconds: 5),
+            pauseAutoPlayOnTouch: true,
+            enlargeCenterPage: true,
+            height: 200,
+          ),
+        );
+        }else if(state is TrendingMoviesFailure){
+          return CustomFailureWidget(errMessage:state.errMessage);
+        }else{
+          return const CustomProgressIndicator();
+        }
       },
-      options: CarouselOptions(
-        autoPlay: true,
-        autoPlayInterval: Duration(seconds: 5),
-        pauseAutoPlayOnTouch: true,
-        enlargeCenterPage: true,
-        height: 200,
-      ),
     );
   }
 }
@@ -31,7 +44,7 @@ class MovieCarousel extends StatelessWidget {
 class MovieCarouselItem extends StatelessWidget {
   final MovieModel movie;
 
-  MovieCarouselItem({required this.movie});
+  const MovieCarouselItem({super.key, required this.movie});
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +58,7 @@ class MovieCarouselItem extends StatelessWidget {
             child: CachedNetworkImage(
               fit: BoxFit.fill,
               imageUrl: "${ApiService.baseImage}${movie.posterPath}",
-              errorWidget: (context, url, error) => Icon(Icons.error),
+              errorWidget: (context, url, error) => const Icon(Icons.error),
             ),
           ),
         ),
@@ -55,11 +68,11 @@ class MovieCarouselItem extends StatelessWidget {
           left: 0,
           right: 0,
           child: Container(
-            padding: EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(8.0),
             color: Colors.black54,
             child: Text(
               movie.title ?? "",
-              style: TextStyle(color: Colors.white, fontSize: 16),
+              style: const TextStyle(color: Colors.white, fontSize: 16),
             ),
           ),
         ),
