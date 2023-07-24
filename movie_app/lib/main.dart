@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:movie_app/features/home/presentation/views/home_page.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movie_app/features/home/data/repos/home_impl_repo.dart';
+import 'package:movie_app/features/home/presentation/views/home_tab_view.dart';
 import 'package:movie_app/features/search/presentation/views/search_page.dart';
 import 'package:movie_app/features/settings/presentation/views/settings_page.dart';
+import 'package:movie_app/simble_observer.dart';
+
+import 'core/utils/service_locator.dart';
+import 'features/home/presentation/manager/upcommingMovie/upcomming_cubit.dart';
 
 void main() {
+  setupServiceLocator();
+  Bloc.observer = SimbleObserve();
   runApp(const PopFlake());
 }
 
@@ -12,36 +20,43 @@ class PopFlake extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData.dark(),
-      home: DefaultTabController(
-        length: 3,
-        child: Scaffold(
-          appBar: AppBar(
-            title: const Text(" PopFlake"),
-            bottom: const TabBar(
-              tabs: [
-                Tab(
-                  icon: Icon(Icons.home),
-                  child: Text("Home"),
-                ),
-                Tab(
-                  icon: Icon(Icons.search),
-                  child: Text("Search"),
-                ),
-                Tab(
-                  icon: Icon(Icons.settings),
-                  child: Text("Setting"),
-                ),
-              ],
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+            create: (context) => UpcommingCubit(getIt.get<HomeRepoImpl>())),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData.dark(),
+        home: DefaultTabController(
+          length: 3,
+          child: Scaffold(
+            appBar: AppBar(
+              centerTitle: true,
+              title: const Text(" PopFlake"),
+              bottom: const TabBar(
+                tabs: [
+                  Tab(
+                    icon: Icon(Icons.home),
+                    child: Text("Home"),
+                  ),
+                  Tab(
+                    icon: Icon(Icons.search),
+                    child: Text("Search"),
+                  ),
+                  Tab(
+                    icon: Icon(Icons.settings),
+                    child: Text("Setting"),
+                  ),
+                ],
+              ),
             ),
+            body:  TabBarView(children: [
+              HomeTabView(),
+              SearchTabView(),
+              SettingsViewTab(),
+            ]),
           ),
-          body: const TabBarView(children: [
-            HomePage(),
-            SearchPage(),
-            SettingsPage(),
-          ]),
         ),
       ),
     );
