@@ -16,22 +16,26 @@ class TopRatedListView extends StatelessWidget {
       child: BlocBuilder<TopRatingCubit, TopRatingState>(
         builder: (context, state) {
           if (state is TopRatingSuccess) {
-            return ListView.builder(
-              physics: const BouncingScrollPhysics(),
-              scrollDirection: Axis.horizontal,
-              itemCount: state.movies.length,
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                  child: GestureDetector(
-                    onTap: () {},
-                    child: CustomMovieImage(
-                        imageUrl:
-                            "${ApiService.baseImage}${state.movies[index].posterPath}" ??
-                                ""),
-                  ),
-                );
-              },
+            return RefreshIndicator(
+              onRefresh: () =>
+                  BlocProvider.of<TopRatingCubit>(context).fetchTopRatedMovie(),
+              child: ListView.builder(
+                // physics: const BouncingScrollPhysics(),
+                scrollDirection: Axis.horizontal,
+                itemCount: state.movies.length,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                    child: GestureDetector(
+                      onTap: () {},
+                      child: CustomMovieImage(
+                          imageUrl:
+                              "${ApiService.baseImage}${state.movies[index].posterPath}" ??
+                                  ""),
+                    ),
+                  );
+                },
+              ),
             );
           } else if (state is TopRatingFailure) {
             return CustomFailureWidget(errMessage: state.errMessage);

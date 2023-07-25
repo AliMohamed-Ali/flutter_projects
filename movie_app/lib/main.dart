@@ -6,16 +6,19 @@ import 'package:movie_app/features/home/presentation/manager/topRatingMovie/top_
 import 'package:movie_app/features/home/presentation/manager/trendingMovie/trending_movies_cubit.dart';
 import 'package:movie_app/features/home/presentation/views/home_tab_view.dart';
 import 'package:movie_app/features/search/presentation/views/search_page.dart';
+import 'package:movie_app/features/settings/presentation/manager/themeCubit/theme_cubit_cubit.dart';
 import 'package:movie_app/features/settings/presentation/views/settings_page.dart';
 import 'package:movie_app/simble_observer.dart';
-
 import 'core/utils/service_locator.dart';
 import 'features/home/presentation/manager/upcommingMovie/upcomming_cubit.dart';
 
 void main() {
   setupServiceLocator();
   Bloc.observer = SimbleObserve();
-  runApp(const PopFlake());
+  runApp(BlocProvider(
+    create: (context) => ThemeCubit(),
+    child: const PopFlake(),
+  ));
 }
 
 class PopFlake extends StatelessWidget {
@@ -23,63 +26,71 @@ class PopFlake extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create: (context) => UpcommingCubit(
-            getIt.get<HomeRepoImpl>(),
-          ),
-        ),
-        BlocProvider(
-          create: (context) => TrendingMoviesCubit(
-            getIt.get<HomeRepoImpl>(),
-          ),
-        ),
-        BlocProvider(
-          create: (context) => TopRatingCubit(
-            getIt.get<HomeRepoImpl>(),
-          ),
-        ),
-        BlocProvider(
-          create: (context) => InTheaterMovieCubit(
-            getIt.get<HomeRepoImpl>(),
-          ),
-        ),
-      ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData.dark(),
-        home: DefaultTabController(
-          length: 3,
-          child: Scaffold(
-            appBar: AppBar(
-              centerTitle: true,
-              title: const Text(" PopFlake"),
-              bottom: const TabBar(
-                tabs: [
-                  Tab(
-                    icon: Icon(Icons.home),
-                    child: Text("Home"),
-                  ),
-                  Tab(
-                    icon: Icon(Icons.search),
-                    child: Text("Search"),
-                  ),
-                  Tab(
-                    icon: Icon(Icons.settings),
-                    child: Text("Setting"),
-                  ),
-                ],
+    return BlocBuilder<ThemeCubit, ThemeModeOptions>(
+      builder: (context, themeMode) {
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          theme: ThemeData.light(),
+          darkTheme: ThemeData.dark(),
+          themeMode:  themeMode == ThemeModeOptions.dark ? ThemeMode.dark : ThemeMode.light,
+         
+
+          home: DefaultTabController(
+            length: 3,
+            child: Scaffold(
+              appBar: AppBar(
+                centerTitle: true,
+                title: const Text(" PopFlake"),
+                bottom: const TabBar(
+                  tabs: [
+                    Tab(
+                      icon: Icon(Icons.home),
+                      child: Text("Home"),
+                    ),
+                    Tab(
+                      icon: Icon(Icons.search),
+                      child: Text("Search"),
+                    ),
+                    Tab(
+                      icon: Icon(Icons.settings),
+                      child: Text("Setting"),
+                    ),
+                  ],
+                ),
               ),
+              body: TabBarView(children: [
+                MultiBlocProvider(
+                  providers: [
+                    BlocProvider(
+                      create: (context) => UpcommingCubit(
+                        getIt.get<HomeRepoImpl>(),
+                      ),
+                    ),
+                    BlocProvider(
+                      create: (context) => TrendingMoviesCubit(
+                        getIt.get<HomeRepoImpl>(),
+                      ),
+                    ),
+                    BlocProvider(
+                      create: (context) => TopRatingCubit(
+                        getIt.get<HomeRepoImpl>(),
+                      ),
+                    ),
+                    BlocProvider(
+                      create: (context) => InTheaterMovieCubit(
+                        getIt.get<HomeRepoImpl>(),
+                      ),
+                    ),
+                  ],
+                  child: HomeTabView(),
+                ),
+                SearchTabView(),
+                SettingsViewTab(),
+              ]),
             ),
-            body: TabBarView(children: [
-              HomeTabView(),
-              SearchTabView(),
-              SettingsViewTab(),
-            ]),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }

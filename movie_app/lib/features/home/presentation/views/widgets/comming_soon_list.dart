@@ -17,6 +17,7 @@ class CommingSoonListView extends StatelessWidget {
         builder: (context, state) {
           if(state is UpcommingSuccess){
             return ListView.builder(
+              
                physics: const BouncingScrollPhysics(),
               scrollDirection: Axis.horizontal,
               itemCount: state.movies.length,

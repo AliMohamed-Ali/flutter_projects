@@ -27,8 +27,8 @@ class HomeRepoImpl implements HomeRepo {
   }
 
   @override
-  Future<Either<Failure, List<MovieModel>>> fetchTrendingMovie() async{
-   try {
+  Future<Either<Failure, List<MovieModel>>> fetchTrendingMovie() async {
+    try {
       var data = await apiService.get(endpoint: "trending/movie/day");
       List<MovieModel> movies = [];
       for (var movie in data["results"]) {
@@ -44,9 +44,26 @@ class HomeRepoImpl implements HomeRepo {
   }
 
   @override
-  Future<Either<Failure, List<MovieModel>>> fetchTopRatedMovie()async {
-   try {
-      var data = await apiService.get(endpoint: "movie/top_rated");
+  Future<Either<Failure, List<MovieModel>>> fetchTopRatedMovie(int? page) async {
+    try {
+      var data = await apiService.get(endpoint: "movie/top_rated?page=$page");
+      List<MovieModel> movies = [];
+      for (var movie in data["results"]) {
+        movies.add(MovieModel.fromJson(movie));
+      }
+      return right(movies);
+    } catch (e) {
+      if (e is DioException) {
+        return left(ServerFailure.fromDioException(e));
+      }
+      return left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<MovieModel>>> fetchInTheaterMovie() async {
+    try {
+      var data = await apiService.get(endpoint: "movie/now_playing");
       List<MovieModel> movies = [];
       for (var movie in data["results"]) {
         movies.add(MovieModel.fromJson(movie));
@@ -64,22 +81,5 @@ class HomeRepoImpl implements HomeRepo {
   Future<Either<Failure, List<MovieModel>>> fetchTopTenInHollywoodMovie() {
     // TODO: implement fetchTopTenInHollywoodMovie
     throw UnimplementedError();
-  }
-  
-  @override
-  Future<Either<Failure, List<MovieModel>>> fetchInTheaterMovie()async {
-    try {
-      var data = await apiService.get(endpoint: "movie/now_playing");
-      List<MovieModel> movies = [];
-      for (var movie in data["results"]) {
-        movies.add(MovieModel.fromJson(movie));
-      }
-      return right(movies);
-    } catch (e) {
-      if (e is DioException) {
-        return left(ServerFailure.fromDioException(e));
-      }
-      return left(ServerFailure(e.toString()));
-    }
   }
 }
