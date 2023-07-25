@@ -11,6 +11,8 @@ class SearchMovieInitial extends SearchMovieState {}
 
 class SearchMovieLoaded extends SearchMovieState {}
 
+class SearchMovieIsEmpty extends SearchMovieState {}
+
 class SearchMovieSuccess extends SearchMovieState {
   final List<MovieModel> movies;
 

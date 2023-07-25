@@ -9,7 +9,7 @@ class CustomMovieImage extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.circular(16),
       child: AspectRatio(
-        aspectRatio: 2.5 / 3.9,
+        aspectRatio: 1.7 / 2,
         child: CachedNetworkImage(
           fit: BoxFit.fill,
           imageUrl: imageUrl,

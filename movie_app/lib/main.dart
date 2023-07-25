@@ -5,7 +5,10 @@ import 'package:movie_app/features/home/presentation/manager/intheaterMovie/in_t
 import 'package:movie_app/features/home/presentation/manager/topRatingMovie/top_rating_cubit.dart';
 import 'package:movie_app/features/home/presentation/manager/trendingMovie/trending_movies_cubit.dart';
 import 'package:movie_app/features/home/presentation/views/home_tab_view.dart';
+import 'package:movie_app/features/search/data/repos/search_impl_repo.dart';
+import 'package:movie_app/features/search/presentation/manager/cubit/search_movie_cubit.dart';
 import 'package:movie_app/features/search/presentation/views/search_page.dart';
+import 'package:movie_app/features/search/presentation/views/widgets/search_tab_view_body.dart';
 import 'package:movie_app/features/settings/presentation/manager/themeCubit/theme_cubit_cubit.dart';
 import 'package:movie_app/features/settings/presentation/views/settings_page.dart';
 import 'package:movie_app/simble_observer.dart';
@@ -32,9 +35,9 @@ class PopFlake extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           theme: ThemeData.light(),
           darkTheme: ThemeData.dark(),
-          themeMode:  themeMode == ThemeModeOptions.dark ? ThemeMode.dark : ThemeMode.light,
-         
-
+          themeMode: themeMode == ThemeModeOptions.dark
+              ? ThemeMode.dark
+              : ThemeMode.light,
           home: DefaultTabController(
             length: 3,
             child: Scaffold(
@@ -82,9 +85,14 @@ class PopFlake extends StatelessWidget {
                       ),
                     ),
                   ],
-                  child: HomeTabView(),
+                  child: const HomeTabView(),
                 ),
-                SearchTabView(),
+                BlocProvider(
+                  create: (context) => SearchMovieCubit(
+                    getIt.get<SearchRepoImpl>(),
+                  ),
+                  child:const SearchTabView(),
+                ),
                 SettingsViewTab(),
               ]),
             ),

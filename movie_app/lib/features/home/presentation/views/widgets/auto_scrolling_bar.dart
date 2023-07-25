@@ -57,7 +57,7 @@ class MovieCarouselItem extends StatelessWidget {
             aspectRatio: 1.6,
             child: CachedNetworkImage(
               fit: BoxFit.fill,
-              imageUrl: "${ApiService.baseImage}${movie.posterPath}",
+              imageUrl: "${ApiService.baseImageW200}${movie.posterPath}",
               errorWidget: (context, url, error) => const Icon(Icons.error),
             ),
           ),

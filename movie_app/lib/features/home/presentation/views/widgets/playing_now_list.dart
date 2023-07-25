@@ -4,7 +4,7 @@ import 'package:movie_app/core/utils/api_service.dart';
 import 'package:movie_app/core/utils/widget/custom_failure_message.dart';
 import 'package:movie_app/core/utils/widget/custom_progress_indicator.dart';
 import 'package:movie_app/features/home/presentation/manager/intheaterMovie/in_theater_movie_cubit.dart';
-import 'package:movie_app/features/home/presentation/views/widgets/custom_movie_image.dart';
+import 'package:movie_app/core/utils/widget/custom_movie_image.dart';
 
 class PlayingNowListView extends StatelessWidget {
   const PlayingNowListView({super.key});
@@ -27,8 +27,7 @@ class PlayingNowListView extends StatelessWidget {
                     onTap: () {},
                     child: CustomMovieImage(
                         imageUrl:
-                            "${ApiService.baseImage}${state.movies[index].posterPath}" ??
-                                ""),
+                            "${ApiService.baseImageW200}${state.movies[index].posterPath}"),
                   ),
                 );
               },
