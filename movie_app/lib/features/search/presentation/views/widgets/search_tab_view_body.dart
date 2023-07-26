@@ -13,8 +13,7 @@ class SearchTabViewBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    return Scaffold(
-      body: Column(
+    return  Column(
         children: [
           Padding(
             padding: const EdgeInsets.all(16),
@@ -74,7 +73,7 @@ class SearchTabViewBody extends StatelessWidget {
             ),
           ),
         ],
-      ),
-    );
+      );
+  
   }
 }

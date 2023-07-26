@@ -32,6 +32,7 @@ class PopFlake extends StatelessWidget {
             final isDarkTheme = themeMode == ThemeModeOptions.dark;
 
             return MaterialApp(
+              debugShowCheckedModeBanner: false,
               theme: ThemeData.light(),
               darkTheme: ThemeData.dark(),
               themeMode: isDarkTheme ? ThemeMode.dark : ThemeMode.light,
