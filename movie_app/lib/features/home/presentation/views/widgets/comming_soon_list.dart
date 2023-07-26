@@ -4,7 +4,8 @@ import 'package:movie_app/core/utils/api_service.dart';
 import 'package:movie_app/core/utils/widget/custom_failure_message.dart';
 import 'package:movie_app/core/utils/widget/custom_progress_indicator.dart';
 import 'package:movie_app/features/home/presentation/manager/upcommingMovie/upcomming_cubit.dart';
-import 'package:movie_app/features/home/presentation/views/widgets/custom_movie_image.dart';
+
+import '../../../../../core/utils/widget/custom_movie_image.dart';
 
 class CommingSoonListView extends StatelessWidget {
   const CommingSoonListView({super.key});
@@ -12,7 +13,8 @@ class CommingSoonListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: MediaQuery.of(context).size.height * 0.25,
+      height: 200,
+      // MediaQuery.of(context).size.height * 0.25,
       child: BlocBuilder<UpcommingCubit, UpcommingState>(
         builder: (context, state) {
           if (state is UpcommingSuccess) {
@@ -31,10 +33,19 @@ class CommingSoonListView extends StatelessWidget {
                               "${ApiService.baseImageW200}${state.movies[index].posterPath}"),
                     ),
                   );
+                } else if (index == state.movies.length) {
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        BlocProvider.of<UpcommingCubit>(context)
+                            .fetchUpcommingMovie();
+                      },
+                      child: Text('Load More'),
+                    ),
+                  );
                 } else {
-                  BlocProvider.of<UpcommingCubit>(context)
-                      .fetchUpcommingMovie();
-                  return const CustomProgressIndicator();
+                  return SizedBox.shrink();
                 }
               },
             );

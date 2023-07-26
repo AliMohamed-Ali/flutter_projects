@@ -21,7 +21,7 @@ class TopRatingCubit extends Cubit<TopRatingState> {
     result.fold((failure) => emit(TopRatingFailure(failure.errMessage)),
         (movies) {
       _movies.addAll(movies);
-      emit(TopRatingSuccess(_movies));
+      return emit(TopRatingSuccess(_movies));
     });
   }
 }

@@ -1,19 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movie_app/features/home/data/repos/home_impl_repo.dart';
-import 'package:movie_app/features/home/presentation/manager/intheaterMovie/in_theater_movie_cubit.dart';
-import 'package:movie_app/features/home/presentation/manager/topRatingMovie/top_rating_cubit.dart';
-import 'package:movie_app/features/home/presentation/manager/trendingMovie/trending_movies_cubit.dart';
-import 'package:movie_app/features/home/presentation/views/home_tab_view.dart';
-import 'package:movie_app/features/search/data/repos/search_impl_repo.dart';
-import 'package:movie_app/features/search/presentation/manager/cubit/search_movie_cubit.dart';
-import 'package:movie_app/features/search/presentation/views/search_page.dart';
-import 'package:movie_app/features/search/presentation/views/widgets/search_tab_view_body.dart';
-import 'package:movie_app/features/settings/presentation/manager/themeCubit/theme_cubit_cubit.dart';
-import 'package:movie_app/features/settings/presentation/views/settings_page.dart';
+import 'package:movie_app/main_app.dart';
 import 'package:movie_app/simble_observer.dart';
+import 'core/utils/check_conductivity.dart';
 import 'core/utils/service_locator.dart';
-import 'features/home/presentation/manager/upcommingMovie/upcomming_cubit.dart';
+import 'package:movie_app/features/settings/presentation/manager/themeCubit/theme_cubit_cubit.dart';
+
+import 'core/utils/widget/no_internet.dart';
 
 void main() {
   setupServiceLocator();
@@ -29,74 +22,22 @@ class PopFlake extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ThemeCubit, ThemeModeOptions>(
-      builder: (context, themeMode) {
-        return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          theme: ThemeData.light(),
-          darkTheme: ThemeData.dark(),
-          themeMode: themeMode == ThemeModeOptions.dark
-              ? ThemeMode.dark
-              : ThemeMode.light,
-          home: DefaultTabController(
-            length: 3,
-            child: Scaffold(
-              appBar: AppBar(
-                centerTitle: true,
-                title: const Text(" PopFlake"),
-                bottom: const TabBar(
-                  tabs: [
-                    Tab(
-                      icon: Icon(Icons.home),
-                      child: Text("Home"),
-                    ),
-                    Tab(
-                      icon: Icon(Icons.search),
-                      child: Text("Search"),
-                    ),
-                    Tab(
-                      icon: Icon(Icons.settings),
-                      child: Text("Setting"),
-                    ),
-                  ],
-                ),
-              ),
-              body: TabBarView(children: [
-                MultiBlocProvider(
-                  providers: [
-                    BlocProvider(
-                      create: (context) => UpcommingCubit(
-                        getIt.get<HomeRepoImpl>(),
-                      ),
-                    ),
-                    BlocProvider(
-                      create: (context) => TrendingMoviesCubit(
-                        getIt.get<HomeRepoImpl>(),
-                      ),
-                    ),
-                    BlocProvider(
-                      create: (context) => TopRatingCubit(
-                        getIt.get<HomeRepoImpl>(),
-                      ),
-                    ),
-                    BlocProvider(
-                      create: (context) => InTheaterMovieCubit(
-                        getIt.get<HomeRepoImpl>(),
-                      ),
-                    ),
-                  ],
-                  child: const HomeTabView(),
-                ),
-                BlocProvider(
-                  create: (context) => SearchMovieCubit(
-                    getIt.get<SearchRepoImpl>(),
-                  ),
-                  child:const SearchTabView(),
-                ),
-                SettingsViewTab(),
-              ]),
-            ),
-          ),
+    return FutureBuilder<bool>(
+      future: ConnectivityUtils.hasInternetConnection(),
+      builder: (context, snapshot) {
+        final hasInternet = snapshot.data ?? false;
+
+        return BlocBuilder<ThemeCubit, ThemeModeOptions>(
+          builder: (context, themeMode) {
+            final isDarkTheme = themeMode == ThemeModeOptions.dark;
+
+            return MaterialApp(
+              theme: ThemeData.light(),
+              darkTheme: ThemeData.dark(),
+              themeMode: isDarkTheme ? ThemeMode.dark : ThemeMode.light,
+              home: hasInternet ? MainApp() : NoInternetWidget(),
+            );
+          },
         );
       },
     );

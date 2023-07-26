@@ -20,7 +20,7 @@ class InTheaterMovieCubit extends Cubit<InTheaterMovieState> {
     result.fold((failure) => emit(InTheaterMovieFailure(failure.errMessage)),
         (movies) {
       _movies.addAll(movies);
-      emit(InTheaterMovieSuccess(_movies));
+      return emit(InTheaterMovieSuccess(_movies));
     });
   }
 }

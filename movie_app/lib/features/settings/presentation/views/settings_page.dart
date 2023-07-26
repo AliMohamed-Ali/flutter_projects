@@ -5,6 +5,8 @@ import 'package:provider/provider.dart';
 import '../manager/themeCubit/theme_cubit_cubit.dart';
 
 class SettingsViewTab extends StatelessWidget {
+  const SettingsViewTab({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -13,7 +15,7 @@ class SettingsViewTab extends StatelessWidget {
           BlocBuilder<ThemeCubit, ThemeModeOptions>(
             builder: (context, themeMode) {
               return SwitchListTile(
-                title: Text('Dark Mode'),
+                title: const Text('Dark Mode'),
                 value: themeMode == ThemeModeOptions.dark,
                 onChanged: (value) {
                   BlocProvider.of<ThemeCubit>(context).toggleTheme();
@@ -25,19 +27,19 @@ class SettingsViewTab extends StatelessWidget {
           // For example, a form with text fields for name, email, and complaint message
           TextFormField(
             onChanged: (value) {},
-            decoration: InputDecoration(labelText: 'Name'),
+            decoration: const InputDecoration(labelText: 'Name'),
           ),
           TextFormField(
             onChanged: (value) {},
-            decoration: InputDecoration(labelText: 'Email'),
+            decoration: const InputDecoration(labelText: 'Email'),
           ),
           TextFormField(
             onChanged: (value) {},
-            decoration: InputDecoration(labelText: 'Complaint Message'),
+            decoration: const InputDecoration(labelText: 'Complaint Message'),
           ),
           ElevatedButton(
             onPressed: () {},
-            child: Text('Submit'),
+            child: const Text('Submit'),
           ),
         ],
       ),

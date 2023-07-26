@@ -11,15 +11,14 @@ class UpcommingCubit extends Cubit<UpcommingState> {
   int page = 1;
   final List<MovieModel> _movies = [];
 
-
   Future<void> fetchUpcommingMovie() async {
     emit(UpcommingLoading());
     var result = await homeRepo.fetchCommingSoonMovie(page);
     page++;
     result.fold((failure) => emit(UpcommingFailure(failure.errMessage)),
-        (movies){
-          _movies.addAll(movies);
-          emit(UpcommingSuccess(_movies));
-        });
+        (movies) {
+      // _movies.addAll(movies);
+      return emit(UpcommingSuccess(movies));
+    });
   }
 }

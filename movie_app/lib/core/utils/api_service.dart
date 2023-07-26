@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 
 class ApiService {
   static const baseImageW200 = "https://image.tmdb.org/t/p/w200";
