@@ -11,6 +11,7 @@ class TrendingMoviesCubit extends Cubit<TrendingMoviesState> {
   final HomeRepo homeRepo;
 
   Future<void> fetchTrendingMovie() async {
+    if (state is TrendingMoviesLoading) return;
     emit(TrendingMoviesLoading());
     var result = await homeRepo.fetchTrendingMovie();
     result.fold((failure) => emit(TrendingMoviesFailure(failure.errMessage)),

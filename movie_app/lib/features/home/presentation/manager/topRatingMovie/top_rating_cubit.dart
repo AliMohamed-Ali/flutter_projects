@@ -14,6 +14,7 @@ class TopRatingCubit extends Cubit<TopRatingState> {
   final List<MovieModel> _movies = [];
 
   Future<void> fetchTopRatedMovie() async {
+    if (state is TopRatingLoading) return;
     emit(TopRatingLoading());
     var result = await homeRepo.fetchTopRatedMovie(page);
     page++;

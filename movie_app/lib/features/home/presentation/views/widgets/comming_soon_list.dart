@@ -4,7 +4,7 @@ import 'package:movie_app/core/utils/api_service.dart';
 import 'package:movie_app/core/utils/widget/custom_failure_message.dart';
 import 'package:movie_app/core/utils/widget/custom_progress_indicator.dart';
 import 'package:movie_app/features/home/presentation/manager/upcommingMovie/upcomming_cubit.dart';
-import 'package:movie_app/core/utils/widget/custom_movie_image.dart';
+import 'package:movie_app/features/home/presentation/views/widgets/custom_movie_image.dart';
 
 class CommingSoonListView extends StatelessWidget {
   const CommingSoonListView({super.key});
@@ -19,17 +19,23 @@ class CommingSoonListView extends StatelessWidget {
             return ListView.builder(
               physics: const BouncingScrollPhysics(),
               scrollDirection: Axis.horizontal,
-              itemCount: state.movies.length,
+              itemCount: state.movies.length + 1,
               itemBuilder: (context, index) {
-                return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                  child: GestureDetector(
-                    onTap: () {},
-                    child: CustomMovieImage(
-                        imageUrl:
-                            "${ApiService.baseImageW200}${state.movies[index].posterPath}"),
-                  ),
-                );
+                if (index < state.movies.length) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                    child: GestureDetector(
+                      onTap: () {},
+                      child: CustomMovieImage(
+                          imageUrl:
+                              "${ApiService.baseImageW200}${state.movies[index].posterPath}"),
+                    ),
+                  );
+                } else {
+                  BlocProvider.of<UpcommingCubit>(context)
+                      .fetchUpcommingMovie();
+                  return const CustomProgressIndicator();
+                }
               },
             );
           } else if (state is UpcommingFailure) {

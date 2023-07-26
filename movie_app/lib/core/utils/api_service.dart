@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 
 class ApiService {
   static const baseImageW200 = "https://image.tmdb.org/t/p/w200";
@@ -10,12 +11,16 @@ class ApiService {
 
   ApiService(this._dio);
 
-  Future<Map<String, dynamic>> get({required String endpoint}) async {
+  Future<Map<String, dynamic>> get(
+      {required String endpoint, int? page = 1}) async {
     var response = await _dio.get('$_baseUrl$endpoint',
-        options: Options(headers: {
-          "Authorization": "Bearer $accessToken",
-          "accept": "application/json",
-        }));
+        queryParameters: {"page": page},
+        options: Options(
+          headers: {
+            "Authorization": "Bearer $accessToken",
+            "accept": "application/json",
+          },
+        ));
 
     return response.data;
   }

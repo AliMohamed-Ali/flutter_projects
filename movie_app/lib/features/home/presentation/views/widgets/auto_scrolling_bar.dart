@@ -10,30 +10,29 @@ import 'package:movie_app/features/home/presentation/manager/trendingMovie/trend
 import '../../../../../model/movie_model.dart';
 
 class MovieCarousel extends StatelessWidget {
-
   const MovieCarousel({super.key});
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<TrendingMoviesCubit, TrendingMoviesState>(
       builder: (context, state) {
-        if(state is TrendingMoviesSuccess){
+        if (state is TrendingMoviesSuccess) {
           return CarouselSlider.builder(
-          itemCount: state.movies.length,
-          itemBuilder: (context, index, realIndex) {
-            return MovieCarouselItem(movie:state.movies[index]);
-          },
-          options: CarouselOptions(
-            autoPlay: true,
-            autoPlayInterval: const Duration(seconds: 5),
-            pauseAutoPlayOnTouch: true,
-            enlargeCenterPage: true,
-            height: 200,
-          ),
-        );
-        }else if(state is TrendingMoviesFailure){
-          return CustomFailureWidget(errMessage:state.errMessage);
-        }else{
+            itemCount: state.movies.length,
+            itemBuilder: (context, index, realIndex) {
+              return MovieCarouselItem(movie: state.movies[index]);
+            },
+            options: CarouselOptions(
+              autoPlay: true,
+              autoPlayInterval: const Duration(seconds: 5),
+              pauseAutoPlayOnTouch: true,
+              enlargeCenterPage: true,
+              height: 200,
+            ),
+          );
+        } else if (state is TrendingMoviesFailure) {
+          return CustomFailureWidget(errMessage: state.errMessage);
+        } else {
           return const CustomProgressIndicator();
         }
       },

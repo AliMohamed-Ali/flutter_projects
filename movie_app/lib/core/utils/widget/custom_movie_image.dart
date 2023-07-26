@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:movie_app/core/utils/widget/custom_progress_indicator.dart';
 
 class CustomMovieImage extends StatelessWidget {
   const CustomMovieImage({super.key, required this.imageUrl});
@@ -13,6 +14,8 @@ class CustomMovieImage extends StatelessWidget {
         child: CachedNetworkImage(
           fit: BoxFit.fill,
           imageUrl: imageUrl,
+          progressIndicatorBuilder: (context, url, progress) =>
+              const CustomProgressIndicator(),
           errorWidget: (context, url, error) => const Icon(Icons.error),
         ),
       ),

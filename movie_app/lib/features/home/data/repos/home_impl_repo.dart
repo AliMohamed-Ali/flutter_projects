@@ -10,9 +10,10 @@ class HomeRepoImpl implements HomeRepo {
 
   HomeRepoImpl(this.apiService);
   @override
-  Future<Either<Failure, List<MovieModel>>> fetchCommingSoonMovie() async {
+  Future<Either<Failure, List<MovieModel>>> fetchCommingSoonMovie(
+      int? page) async {
     try {
-      var data = await apiService.get(endpoint: "movie/upcoming");
+      var data = await apiService.get(endpoint: "movie/upcoming", page: page);
       List<MovieModel> movies = [];
       for (var movie in data["results"]) {
         movies.add(MovieModel.fromJson(movie));
@@ -44,7 +45,8 @@ class HomeRepoImpl implements HomeRepo {
   }
 
   @override
-  Future<Either<Failure, List<MovieModel>>> fetchTopRatedMovie(int? page) async {
+  Future<Either<Failure, List<MovieModel>>> fetchTopRatedMovie(
+      int? page) async {
     try {
       var data = await apiService.get(endpoint: "movie/top_rated?page=$page");
       List<MovieModel> movies = [];
@@ -61,9 +63,11 @@ class HomeRepoImpl implements HomeRepo {
   }
 
   @override
-  Future<Either<Failure, List<MovieModel>>> fetchInTheaterMovie() async {
+  Future<Either<Failure, List<MovieModel>>> fetchInTheaterMovie(
+      int? page) async {
     try {
-      var data = await apiService.get(endpoint: "movie/now_playing");
+      var data =
+          await apiService.get(endpoint: "movie/now_playing", page: page);
       List<MovieModel> movies = [];
       for (var movie in data["results"]) {
         movies.add(MovieModel.fromJson(movie));
@@ -78,7 +82,8 @@ class HomeRepoImpl implements HomeRepo {
   }
 
   @override
-  Future<Either<Failure, List<MovieModel>>> fetchTopTenInHollywoodMovie() {
+  Future<Either<Failure, List<MovieModel>>> fetchTopTenInHollywoodMovie(
+      int? page) {
     // TODO: implement fetchTopTenInHollywoodMovie
     throw UnimplementedError();
   }

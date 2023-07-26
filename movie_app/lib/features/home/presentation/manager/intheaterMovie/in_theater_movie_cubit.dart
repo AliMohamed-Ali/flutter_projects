@@ -9,11 +9,18 @@ part 'in_theater_movie_state.dart';
 class InTheaterMovieCubit extends Cubit<InTheaterMovieState> {
   InTheaterMovieCubit(this.homeRepo) : super(InTheaterMovieInitial());
   final HomeRepo homeRepo;
+  int page = 1;
+  final List<MovieModel> _movies = [];
 
   Future<void> fetchInTheaterMovie() async {
+    if(state is InTheaterMovieLoading)return;
     emit(InTheaterMovieLoading());
-    var result = await homeRepo.fetchInTheaterMovie();
+    var result = await homeRepo.fetchInTheaterMovie(page);
+    page++;
     result.fold((failure) => emit(InTheaterMovieFailure(failure.errMessage)),
-        (movies) => emit(InTheaterMovieSuccess(movies)));
+        (movies) {
+      _movies.addAll(movies);
+      emit(InTheaterMovieSuccess(_movies));
+    });
   }
 }
