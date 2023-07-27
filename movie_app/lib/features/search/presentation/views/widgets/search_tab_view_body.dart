@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movie_app/core/utils/api_service.dart';
 import 'package:movie_app/core/utils/widget/custom_failure_message.dart';
 import 'package:movie_app/core/utils/widget/custom_progress_indicator.dart';
 import 'package:movie_app/features/search/presentation/manager/cubit/search_movie_cubit.dart';
-
-import '../../../../../core/utils/widget/custom_movie_image.dart';
-import '../../../../details/presentation/views/movie_details_page.dart';
+import 'package:movie_app/features/search/presentation/views/widgets/search_movie_view.dart';
 
 class SearchTabViewBody extends StatelessWidget {
   const SearchTabViewBody({super.key});
@@ -38,25 +35,7 @@ class SearchTabViewBody extends StatelessWidget {
                   itemCount: state.movies.length,
                   itemBuilder: (context, index) {
                     final movie = state.movies[index];
-                    return ListTile(
-                      title: Text(movie.title ?? ""),
-                      subtitle: Text(
-                        "${movie.overview}",
-                        maxLines: 3,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      leading: movie.posterPath != null &&
-                              movie.posterPath!.isNotEmpty
-                          ? CustomMovieImage(
-                              imageUrl:
-                                  "${ApiService.baseImageW92}${movie.posterPath}",
-                            )
-                          : const Icon(Icons.movie),
-                      onTap: () {
-                        Navigator.pushNamed(context, MovieDetailsPage.id,
-                            arguments: movie);
-                      },
-                    );
+                    return SearchMovieView(movie: movie);
                   },
                 );
               } else if (state is SearchMovieFailure) {
