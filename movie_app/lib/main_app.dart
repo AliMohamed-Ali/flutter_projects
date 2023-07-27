@@ -13,70 +13,40 @@ import 'package:movie_app/features/settings/presentation/views/settings_page.dar
 import 'core/utils/service_locator.dart';
 import 'features/home/presentation/manager/upcommingMovie/upcomming_cubit.dart';
 
-
 class MainApp extends StatelessWidget {
   const MainApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-            length: 3,
-            child: Scaffold(
-              appBar: AppBar(
-                centerTitle: true,
-                title: const Text(" PopFlake"),
-                bottom: const TabBar(
-                  tabs: [
-                    Tab(
-                      icon: Icon(Icons.home),
-                      child: Text("Home"),
-                    ),
-                    Tab(
-                      icon: Icon(Icons.search),
-                      child: Text("Search"),
-                    ),
-                    Tab(
-                      icon: Icon(Icons.settings),
-                      child: Text("Setting"),
-                    ),
-                  ],
-                ),
+      length: 3,
+      child: Scaffold(
+        appBar: AppBar(
+          centerTitle: true,
+          title: const Text(" PopFlake"),
+          bottom: const TabBar(
+            tabs: [
+              Tab(
+                icon: Icon(Icons.home),
+                child: Text("Home"),
               ),
-              body: TabBarView(children: [
-                MultiBlocProvider(
-                  providers: [
-                    BlocProvider(
-                      create: (context) => UpcommingCubit(
-                        getIt.get<HomeRepoImpl>(),
-                      )..fetchUpcommingMovie(),
-                    ),
-                    BlocProvider(
-                      create: (context) => TrendingMoviesCubit(
-                        getIt.get<HomeRepoImpl>(),
-                      )..fetchTrendingMovie(),
-                    ),
-                    BlocProvider(
-                      create: (context) => TopRatingCubit(
-                        getIt.get<HomeRepoImpl>(),
-                      )..fetchTopRatedMovie(),
-                    ),
-                    BlocProvider(
-                      create: (context) => InTheaterMovieCubit(
-                        getIt.get<HomeRepoImpl>(),
-                      )..fetchInTheaterMovie(),
-                    ),
-                  ],
-                  child: const HomeTabView(),
-                ),
-                BlocProvider(
-                  create: (context) => SearchMovieCubit(
-                    getIt.get<SearchRepoImpl>(),
-                  ),
-                  child:const SearchTabView(),
-                ),
-                SettingsViewTab(),
-              ]),
-            ),
-          );
+              Tab(
+                icon: Icon(Icons.search),
+                child: Text("Search"),
+              ),
+              Tab(
+                icon: Icon(Icons.settings),
+                child: Text("Setting"),
+              ),
+            ],
+          ),
+        ),
+        body:const TabBarView(children: [
+           HomeTabView(),
+           SearchTabView(),
+          SettingsViewTab(),
+        ]),
+      ),
+    );
   }
 }

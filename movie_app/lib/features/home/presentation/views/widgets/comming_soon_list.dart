@@ -25,8 +25,8 @@ class CommingSoonListView extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               itemCount: state.movies.length + 1,
               itemBuilder: (context, index) {
-                MovieModel movie = state.movies[index];
                 if (index < state.movies.length) {
+                  MovieModel movie = state.movies[index];
                   return Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 4.0),
                     child: GestureDetector(
@@ -51,7 +51,7 @@ class CommingSoonListView extends StatelessWidget {
                     ),
                   );
                 } else {
-                  return SizedBox.shrink();
+                  return const SizedBox.shrink();
                 }
               },
             );
