@@ -12,6 +12,7 @@ class DarkModeSwitchTile extends StatelessWidget {
     return BlocBuilder<ThemeCubit, ThemeModeOptions>(
       builder: (context, themeMode) {
         return SwitchListTile(
+        
           title: const Text('Dark Mode'),
           value: themeMode == ThemeModeOptions.dark,
           onChanged: (value) {
