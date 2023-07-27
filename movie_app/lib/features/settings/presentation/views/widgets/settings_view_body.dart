@@ -10,17 +10,7 @@ class SettingsViewBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView(
       children: [
-        BlocBuilder<ThemeCubit, ThemeModeOptions>(
-          builder: (context, themeMode) {
-            return SwitchListTile(
-              title: const Text('Dark Mode'),
-              value: themeMode == ThemeModeOptions.dark,
-              onChanged: (value) {
-                BlocProvider.of<ThemeCubit>(context).toggleTheme();
-              },
-            );
-          },
-        ),
+        DarkModeSwitchTile(),
         // Implement the complaints form
         // For example, a form with text fields for name, email, and complaint message
         TextFormField(
@@ -40,6 +30,25 @@ class SettingsViewBody extends StatelessWidget {
           child: const Text('Submit'),
         ),
       ],
+    );
+  }
+}
+
+class DarkModeSwitchTile extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final themeCubit = BlocProvider.of<ThemeCubit>(context);
+
+    return BlocBuilder<ThemeCubit, ThemeModeOptions>(
+      builder: (context, themeMode) {
+        return SwitchListTile(
+          title: const Text('Dark Mode'),
+          value: themeMode == ThemeModeOptions.dark,
+          onChanged: (value) {
+            themeCubit.toggleTheme();
+          },
+        );
+      },
     );
   }
 }
