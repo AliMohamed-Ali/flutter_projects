@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../manager/themeCubit/theme_cubit_cubit.dart';
+import 'dark_mode_switch.dart';
 
 class SettingsViewBody extends StatelessWidget {
   const SettingsViewBody({super.key});
@@ -30,25 +29,6 @@ class SettingsViewBody extends StatelessWidget {
           child: const Text('Submit'),
         ),
       ],
-    );
-  }
-}
-
-class DarkModeSwitchTile extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final themeCubit = BlocProvider.of<ThemeCubit>(context);
-
-    return BlocBuilder<ThemeCubit, ThemeModeOptions>(
-      builder: (context, themeMode) {
-        return SwitchListTile(
-          title: const Text('Dark Mode'),
-          value: themeMode == ThemeModeOptions.dark,
-          onChanged: (value) {
-            themeCubit.toggleTheme();
-          },
-        );
-      },
     );
   }
 }

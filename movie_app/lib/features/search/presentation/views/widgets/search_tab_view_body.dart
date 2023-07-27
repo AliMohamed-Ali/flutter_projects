@@ -1,3 +1,4 @@
+import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie_app/core/utils/widget/custom_failure_message.dart';
@@ -17,7 +18,10 @@ class SearchTabViewBody extends StatelessWidget {
           child: TextFormField(
             decoration: const InputDecoration(labelText: 'Search Movies'),
             onChanged: (query) {
-              BlocProvider.of<SearchMovieCubit>(context).searchMovie(query);
+              // Use debounce to delay the searchMovie call
+              EasyDebounce.debounce("search", Duration(milliseconds: 500), () {
+                BlocProvider.of<SearchMovieCubit>(context).searchMovie(query);
+              });
             },
           ),
         ),

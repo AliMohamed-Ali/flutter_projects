@@ -27,7 +27,7 @@ class SearchTabView extends StatelessWidget {
           } else if (!hasInternet) {
             return const NoInternetWidget();
           } else {
-            return BlocProvider(
+            return BlocProvider<SearchMovieCubit>(  
               create: (context) => SearchMovieCubit(
                 getIt.get<SearchRepoImpl>(),
               ),
