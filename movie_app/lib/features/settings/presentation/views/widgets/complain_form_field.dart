@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 class ComplaintFormField extends StatelessWidget {
   final TextEditingController controller;
 
@@ -10,6 +11,12 @@ class ComplaintFormField extends StatelessWidget {
       controller: controller,
       onChanged: (value) {},
       decoration: const InputDecoration(labelText: 'Complaint Message'),
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return 'Please enter your complaint message';
+        }
+        return null;
+      },
     );
   }
 }

@@ -15,6 +15,7 @@ class NameFormField extends StatelessWidget {
         if (value == null || value.isEmpty) {
           return 'Please enter your name';
         }
+
         return null;
       },
     );

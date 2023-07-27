@@ -15,6 +15,12 @@ class EmailFormField extends StatelessWidget {
         if (value == null || value.isEmpty) {
           return 'Please enter your email';
         }
+        // Add email validation logic here
+        // You can use a regular expression to check if the email is valid
+        // For example, check if it contains @ and .
+        if (!value.contains('@') || !value.contains('.')) {
+          return 'Please enter a valid email address';
+        }
         return null;
       },
     );
