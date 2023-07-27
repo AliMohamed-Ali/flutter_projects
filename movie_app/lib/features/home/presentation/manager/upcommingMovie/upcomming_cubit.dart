@@ -16,9 +16,6 @@ class UpcommingCubit extends Cubit<UpcommingState> {
     var result = await homeRepo.fetchCommingSoonMovie(page);
     page++;
     result.fold((failure) => emit(UpcommingFailure(failure.errMessage)),
-        (movies) {
-      // _movies.addAll(movies);
-      return emit(UpcommingSuccess(movies));
-    });
+        (movies) => emit(UpcommingSuccess(movies)));
   }
 }

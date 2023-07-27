@@ -48,22 +48,22 @@ class MainApp extends StatelessWidget {
                     BlocProvider(
                       create: (context) => UpcommingCubit(
                         getIt.get<HomeRepoImpl>(),
-                      ),
+                      )..fetchUpcommingMovie(),
                     ),
                     BlocProvider(
                       create: (context) => TrendingMoviesCubit(
                         getIt.get<HomeRepoImpl>(),
-                      ),
+                      )..fetchTrendingMovie(),
                     ),
                     BlocProvider(
                       create: (context) => TopRatingCubit(
                         getIt.get<HomeRepoImpl>(),
-                      ),
+                      )..fetchTopRatedMovie(),
                     ),
                     BlocProvider(
                       create: (context) => InTheaterMovieCubit(
                         getIt.get<HomeRepoImpl>(),
-                      ),
+                      )..fetchInTheaterMovie(),
                     ),
                   ],
                   child: const HomeTabView(),

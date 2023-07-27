@@ -5,15 +5,13 @@ import 'package:movie_app/core/utils/api_service.dart';
 import 'package:movie_app/features/search/data/repos/search_repo.dart';
 import 'package:movie_app/model/movie_model.dart';
 
-class SearchRepoImpl extends SearchRepo{
-
+class SearchRepoImpl extends SearchRepo {
   final ApiService apiService;
 
   SearchRepoImpl(this.apiService);
-  
+
   @override
   Future<Either<Failure, List<MovieModel>>> searchMovies(String query) async {
-
     try {
       var data = await apiService.get(endpoint: "search/movie?query=$query");
       List<MovieModel> movies = [];
@@ -27,7 +25,5 @@ class SearchRepoImpl extends SearchRepo{
       }
       return left(ServerFailure(e.toString()));
     }
-    
   }
-
 }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movie_app/features/details/presentation/views/movie_details_page.dart';
+import 'package:movie_app/features/home/presentation/views/home_tab_view.dart';
 import 'package:movie_app/main_app.dart';
 import 'package:movie_app/simble_observer.dart';
 import 'core/utils/check_conductivity.dart';
@@ -22,8 +24,9 @@ class PopFlake extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<bool>(
-      future: ConnectivityUtils.hasInternetConnection(),
+    return StreamBuilder<bool>(
+      stream: ConnectivityUtils.onInternetStatusChange(),
+      initialData: true, // Assume there's internet initially
       builder: (context, snapshot) {
         final hasInternet = snapshot.data ?? false;
 
@@ -36,7 +39,14 @@ class PopFlake extends StatelessWidget {
               theme: ThemeData.light(),
               darkTheme: ThemeData.dark(),
               themeMode: isDarkTheme ? ThemeMode.dark : ThemeMode.light,
-              home: hasInternet ? MainApp() : NoInternetWidget(),
+              routes: {
+                MovieDetailsPage.id: (context) => MovieDetailsPage(),
+              },
+              home: hasInternet
+                  ? const MainApp()
+                  : const Scaffold(
+                      body: NoInternetWidget(),
+                    ),
             );
           },
         );

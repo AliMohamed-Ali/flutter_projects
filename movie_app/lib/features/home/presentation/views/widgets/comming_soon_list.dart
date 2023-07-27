@@ -4,8 +4,10 @@ import 'package:movie_app/core/utils/api_service.dart';
 import 'package:movie_app/core/utils/widget/custom_failure_message.dart';
 import 'package:movie_app/core/utils/widget/custom_progress_indicator.dart';
 import 'package:movie_app/features/home/presentation/manager/upcommingMovie/upcomming_cubit.dart';
+import 'package:movie_app/model/movie_model.dart';
 
 import '../../../../../core/utils/widget/custom_movie_image.dart';
+import '../../../../details/presentation/views/movie_details_page.dart';
 
 class CommingSoonListView extends StatelessWidget {
   const CommingSoonListView({super.key});
@@ -23,11 +25,15 @@ class CommingSoonListView extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               itemCount: state.movies.length + 1,
               itemBuilder: (context, index) {
+                MovieModel movie = state.movies[index];
                 if (index < state.movies.length) {
                   return Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 4.0),
                     child: GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.pushNamed(context, MovieDetailsPage.id,
+                            arguments: movie);
+                      },
                       child: CustomMovieImage(
                           imageUrl:
                               "${ApiService.baseImageW200}${state.movies[index].posterPath}"),

@@ -7,20 +7,26 @@ import '../../../data/repos/home_repo.dart';
 part 'in_theater_movie_state.dart';
 
 class InTheaterMovieCubit extends Cubit<InTheaterMovieState> {
-  InTheaterMovieCubit(this.homeRepo) : super(InTheaterMovieInitial());
   final HomeRepo homeRepo;
   int page = 1;
   final List<MovieModel> _movies = [];
 
+  InTheaterMovieCubit(this.homeRepo) : super(InTheaterMovieInitial());
+
   Future<void> fetchInTheaterMovie() async {
-    if(state is InTheaterMovieLoading)return;
+    if (state is InTheaterMovieLoading) return;
+
     emit(InTheaterMovieLoading());
-    var result = await homeRepo.fetchInTheaterMovie(page);
+
+    final result = await homeRepo.fetchInTheaterMovie(page);
     page++;
-    result.fold((failure) => emit(InTheaterMovieFailure(failure.errMessage)),
-        (movies) {
-      _movies.addAll(movies);
-      return emit(InTheaterMovieSuccess(_movies));
-    });
+
+    result.fold(
+      (failure) => emit(InTheaterMovieFailure(failure.errMessage)),
+      (movies) {
+        _movies.addAll(movies);
+        emit(InTheaterMovieSuccess(_movies));
+      },
+    );
   }
 }

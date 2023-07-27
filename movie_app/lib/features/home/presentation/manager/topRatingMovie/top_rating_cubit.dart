@@ -8,20 +8,26 @@ import '../../../data/repos/home_repo.dart';
 part 'top_rating_state.dart';
 
 class TopRatingCubit extends Cubit<TopRatingState> {
-  TopRatingCubit(this.homeRepo) : super(TopRatingInitial());
   final HomeRepo homeRepo;
   int page = 1;
   final List<MovieModel> _movies = [];
 
+  TopRatingCubit(this.homeRepo) : super(TopRatingInitial());
+
   Future<void> fetchTopRatedMovie() async {
     if (state is TopRatingLoading) return;
+
     emit(TopRatingLoading());
-    var result = await homeRepo.fetchTopRatedMovie(page);
+
+    final result = await homeRepo.fetchTopRatedMovie(page);
     page++;
-    result.fold((failure) => emit(TopRatingFailure(failure.errMessage)),
-        (movies) {
-      _movies.addAll(movies);
-      return emit(TopRatingSuccess(_movies));
-    });
+
+    result.fold(
+      (failure) => emit(TopRatingFailure(failure.errMessage)),
+      (movies) {
+        _movies.addAll(movies);
+        emit(TopRatingSuccess(_movies));
+      },
+    );
   }
 }

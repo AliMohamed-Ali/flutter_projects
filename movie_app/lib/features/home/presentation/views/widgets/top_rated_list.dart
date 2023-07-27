@@ -6,6 +6,9 @@ import 'package:movie_app/core/utils/widget/custom_progress_indicator.dart';
 import 'package:movie_app/features/home/presentation/manager/topRatingMovie/top_rating_cubit.dart';
 import 'package:movie_app/core/utils/widget/custom_movie_image.dart';
 
+import '../../../../../model/movie_model.dart';
+import '../../../../details/presentation/views/movie_details_page.dart';
+
 class TopRatedListView extends StatelessWidget {
   const TopRatedListView({super.key});
 
@@ -24,10 +27,15 @@ class TopRatedListView extends StatelessWidget {
               itemCount: state.movies.length + 1,
               itemBuilder: (context, index) {
                 if (index < state.movies.length) {
+                  MovieModel movie = state.movies[index];
+
                   return Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 4.0),
                     child: GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.pushNamed(context, MovieDetailsPage.id,
+                            arguments: movie);
+                      },
                       child: CustomMovieImage(
                           imageUrl:
                               "${ApiService.baseImageW200}${state.movies[index].posterPath}"),
