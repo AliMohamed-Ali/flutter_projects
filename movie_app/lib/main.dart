@@ -7,6 +7,7 @@ import 'core/utils/service_locator.dart';
 import 'package:movie_app/features/settings/presentation/manager/themeCubit/theme_cubit_cubit.dart';
 
 void main() {
+  
   setupServiceLocator();
   Bloc.observer = SimbleObserve();
   runApp(BlocProvider(
@@ -14,6 +15,8 @@ void main() {
     child: const PopFlake(),
   ));
 }
+
+
 
 class PopFlake extends StatelessWidget {
   const PopFlake({super.key});
